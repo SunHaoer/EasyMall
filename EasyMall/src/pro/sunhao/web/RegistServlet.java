@@ -19,7 +19,13 @@ import pro.sunhao.util.WebUtils;
  *
  */
 public class RegistServlet extends HttpServlet {
-
+	
+	/**
+	 * 1.获取表单请求的参数
+	 * 2.表单验证
+	 * 3.执行对应逻辑(向数据库插入数据)
+	 * 4.根据执行结果响应不同信息
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 1.处理乱码
@@ -32,7 +38,6 @@ public class RegistServlet extends HttpServlet {
 		String nickname = request.getParameter("nickname");
 		String email = request.getParameter("email");
 		String valistr = request.getParameter("valistr");
-		System.out.println(username + " " + password + " " + password2 + " " + nickname + " " + email + " " + valistr);
 		// 3.各种验证
 		if(WebUtils.isEmpty(username)) {		// 用户名非空验证
 			request.setAttribute("msg", "用户名不能为空");			// 添加错误信息
@@ -114,7 +119,7 @@ public class RegistServlet extends HttpServlet {
 			// 5.根据业务逻辑执行结果，返回对应页面	
 			if(i > 0) {		// 注册成功
 				response.getWriter().write("注册成功");
-				response.addHeader("refresh", "3, url=/index.jsp");
+				response.addHeader("refresh", "3, url=" + request.getContextPath() + "/index.jsp");
 			} else {		// 注册失败
 				request.setAttribute("msg", "注册失败");
 				request.getRequestDispatcher("/regist.jsp").include(request, response);

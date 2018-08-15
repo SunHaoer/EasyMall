@@ -7,6 +7,11 @@ import java.sql.SQLException;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+/**
+ * 提供数据库操作的工具
+ * @author Administrator
+ *
+ */
 
 public class JDBCUtils {
 	private static ComboPooledDataSource ds = new ComboPooledDataSource();
@@ -21,8 +26,7 @@ public class JDBCUtils {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		// 将获取到的连接返回给用户
-		return conn;
+		return conn;		// 将获取到的连接返回给用户
 	}
 	
 	public static void close(Connection conn, PreparedStatement ps, ResultSet rs) {
