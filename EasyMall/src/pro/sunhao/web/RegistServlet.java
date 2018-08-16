@@ -25,7 +25,20 @@ public class RegistServlet extends HttpServlet {
 	 * 2.表单验证
 	 * 3.执行对应逻辑(向数据库插入数据)
 	 * 4.根据执行结果响应不同信息
+	 * @throws IOException 
+	 * @throws ServletException 
 	 */
+	
+	public boolean isEmpty(HttpServletRequest request, HttpServletResponse response, String name, String str) 
+			throws ServletException, IOException {
+		if(WebUtils.isEmpty(name)) {		// 用户名非空验证
+			request.setAttribute("msg", str + "不能为空");			// 添加错误信息				
+			request.getRequestDispatcher("/regist.jsp").forward(request, response);		// 转发到regist.jsp
+			return true;
+		}
+		return false;
+	}
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 1.处理乱码
@@ -39,36 +52,10 @@ public class RegistServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String valistr = request.getParameter("valistr");
 		// 3.各种验证
-		if(WebUtils.isEmpty(username)) {		// 用户名非空验证
-			request.setAttribute("msg", "用户名不能为空");			// 添加错误信息
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);			// 转发到regist.jsp
-			return;
+		if(isEmpty(request, response, username, "用户名") || isEmpty(request, response, password, "密码") || isEmpty(request, response, password2, "确认密码")
+		|| isEmpty(request, response, nickname, "昵称") || isEmpty(request, response, email, "email") || isEmpty(request, response, valistr, "验证码") ) {
+			return;				// 各种参数的非空验证
 		}
-		if(WebUtils.isEmpty(password)) {
-			request.setAttribute("msg", "密码不能为空");			// 添加错误信息
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);			// 转发到regist.jsp
-			return;			
-		}
-		if(WebUtils.isEmpty(password2)) {
-			request.setAttribute("msg", "确认密码不能为空");			// 添加错误信息
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);			// 转发到regist.jsp
-			return;			
-		}
-		if(WebUtils.isEmpty(nickname)) {
-			request.setAttribute("msg", "昵称不能为空");				// 添加错误信息
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);			// 转发到regist.jsp
-			return;		}
-		if(WebUtils.isEmpty(email)) {
-			request.setAttribute("msg", "email不能为空");			// 添加错误信息
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);			// 转发到regist.jsp
-			return;			
-		}
-		if(WebUtils.isEmpty(valistr)) {
-			request.setAttribute("msg", "验证码不能为空");			// 添加错误信息
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);			// 转发到regist.jsp
-			return;			
-		}
-		//System.out.println(password + "=" + password2 + "=" +  password.equals(password2));
 		if(!password.equals(password2)) {							// 两次密码一致验证
 			request.setAttribute("msg", "两次密码不一致");			// 添加错误信息
 			request.getRequestDispatcher("/regist.jsp").forward(request, response);			// 转发到regist.jsp
@@ -102,7 +89,6 @@ public class RegistServlet extends HttpServlet {
 		} finally {
 			JDBCUtils.close(conn1, ps1, rs1);
 		}
-
 		// 4.执行业务逻辑 -- 将用户注册信息添加到数据库
 		String sql2 = "insert into user values(null, ?, ?, ?, ?)";
 		Connection conn2 = null;
