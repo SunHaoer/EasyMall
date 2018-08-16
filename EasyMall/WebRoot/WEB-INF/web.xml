@@ -5,6 +5,11 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
   <display-name></display-name>
+  <!-- 配置当前web应用的初始化参数 -->
+  <context-param>
+  	<param-name>encode</param-name>
+  	<param-value>utf-8</param-value>
+  </context-param>
   <servlet>
     <servlet-name>RegistServlet</servlet-name>
     <servlet-class>pro.sunhao.web.RegistServlet</servlet-class>
@@ -13,6 +18,11 @@
     <servlet-name>ValiImageServlet</servlet-name>
     <servlet-class>pro.sunhao.web.ValiImageServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>AjaxCheckUsernameServlet</servlet-name>
+    <servlet-class>pro.sunhao.web.AjaxCheckUsernameServlet</servlet-class>
+  </servlet>
+
 
 
   <servlet-mapping>
@@ -22,6 +32,10 @@
   <servlet-mapping>
     <servlet-name>ValiImageServlet</servlet-name>
     <url-pattern>/servlet/ValiImageServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AjaxCheckUsernameServlet</servlet-name>
+    <url-pattern>/servlet/AjaxCheckUsernameServlet</url-pattern>
   </servlet-mapping>	
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>

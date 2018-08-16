@@ -14,7 +14,7 @@
 		<script type="text/javascript">
 			var formObj = {
 				"checkForm": function() {
-					var canSubmit = true; // 控制表单是否提交, 默认true
+					var canSubmit = true; // 控制表单是否提可以交, 默认true
 					// 非空验证
 					canSubmit = this.checkNull("username", "用户名不能为空") && canSubmit;
 					canSubmit = this.checkNull("password", "密码不能为空") && canSubmit;
@@ -26,7 +26,7 @@
 					canSubmit = this.checkPassword("password", "两次密码应该一致") && canSubmit;
 					// 邮箱格式验证
 					canSubmit = this.checkEmail("email", "邮箱格式不正确") && canSubmit;		
-					return true;
+					return canSubmit;
 				},
 				"checkEmail": function(name, msg) {		// 邮箱格式验证
 					var email = $("input[name='"+name+"']").val();		// 获取用户输入的邮箱内容
@@ -75,8 +75,17 @@
 
 			// 添加一个文档就绪事件
 			$(function() {
-				$("input[name='username']").blur(function() {			// 添加input失去鼠标焦点事件
-					formObj.checkNull("username", "用户名不能为空");
+				$("input[name='username']").blur(function(){
+					var notNull = formObj.checkNull("username","用户名不能为空");	// 执行非空验证
+					var username = $(this).val();	// 获取当前input框中的值
+					if(notNull) {	// 发送一个AJAX请求
+						var url = "<%=request.getContextPath()%>/servlet/AjaxCheckUsernameServlet";
+						// function就是callback，当页面收到服务器返回的应答后，会自动调用
+						// function方法，其参数result，就是服务器返回的内容
+						$.get(url,{"username":username},function(result){
+							$("#msg_username").html(result);
+						});
+					}
 				});
 				$("input[name='password']").blur(function() {
 					formObj.checkNull("password", "密码不能为空");
@@ -118,7 +127,7 @@
 				<tr>
 					<td class="tds">用户名：</td>
 					<td>
-						<input type="text" name="username" value='<%=request.getParameter("username")==null?"":request.getParameter("username") %>' /><span></span>
+						<input type="text" name="username" value='<%=request.getParameter("username")==null?"":request.getParameter("username") %>' /><span id="msg_username"></span>
 					</td>
 				</tr>
 				<tr>

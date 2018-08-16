@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import pro.sunhao.util.JDBCUtils;
 import pro.sunhao.util.WebUtils;
 
+
 /**
- * 注册
+ * 用于响应注册
  * @author Administrator
  *
  */
@@ -42,8 +44,11 @@ public class RegistServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 1.处理乱码
-		request.setCharacterEncoding("utf-8");		// 请求乱码
-		response.setContentType("text/html; charset=utf-8");		// 应答乱码
+		ServletContext sc = this.getServletContext();
+		String encode = sc.getInitParameter("encode");
+		request.setCharacterEncoding(encode);		// 请求乱码
+		//request.setCharacterEncoding(InitServlet.encode);
+		response.setContentType("text/html; charset=" + encode);		// 应答乱码
 		// 2.接收表单参数
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
