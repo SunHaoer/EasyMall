@@ -24,8 +24,7 @@ public class ValiImageServlet extends HttpServlet {
 		response.setHeader("cache-control", "no-cathe");
 		VerifyCode vc = new VerifyCode();				// 创建实例
 		vc.drawImage(response.getOutputStream());		// 生成图片，给response应答实体
-		String text = vc.getCode();			// 生成验证码文本
-		//System.out.println("cv=" + text);
+		request.getSession().setAttribute("valiCode", vc.getCode());	// 将生成的验证码图片的内容存入session作用域
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

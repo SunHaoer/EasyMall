@@ -109,7 +109,6 @@
 					// 每次点击获取当前时间的毫秒值
 					var dateStr = new Date().getTime();
 					// 修改src属性值
-					//$(this).attr("src", "/EasyMall/servlet/ValiImageServlet?time="+dateStr);
 					$(this).attr("src", "<%=request.getContextPath()%>/servlet/ValiImageServlet?time=" + dateStr);
 				});
 			});
@@ -122,7 +121,8 @@
 			<table>
 				<tr>
 					<td colspan="2">
-					<%=request.getAttribute("msg")==null?"":request.getAttribute("msg") %>
+						<%=request.getAttribute("msg")==null ? "" : request.getAttribute("msg") %>
+					</td>
 				</tr>
 				<tr>
 					<td class="tds">用户名：</td>

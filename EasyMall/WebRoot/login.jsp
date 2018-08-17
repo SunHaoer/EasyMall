@@ -1,18 +1,45 @@
+<%@page import="java.net.URLDecoder"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
 <html>
 	<head>
+		<%
+    		String path = request.getContextPath();
+    		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+		%>
 		<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
-		<link rel="stylesheet" href="css/login.css"/>
-		<title>EasyMall欢迎您登陆</title>
+		<link rel="stylesheet" href="<%=basePath%>/css/login.css"/>
+		<title>EasyMall欢迎您登录</title>
 	</head>
 	<body>
+		<%
+			Cookie[] cs = request.getCookies();		// 获取用户携带的cookie
+			Cookie findC = null;
+			if(cs != null) {			// 查看cookie中是否包含username
+				for(Cookie c : cs) {
+					//System.out.println(c.getPath());
+					if("remname".equals(c.getName())) {		
+						findC = c;
+						break;
+					}
+				}
+			}
+			String username = "";
+			if(findC != null) {			// 找到remname, 添加到username
+				username = URLDecoder.decode(findC.getValue(), "utf-8");
+			}
+	 	%>
 		<h1>欢迎登陆EasyMall</h1>
-		<form action="#" method="POST">
+		<form action=<%=request.getContextPath() + "/servlet/LoginServlet"%> method="POST">
 			<table>
 				<tr>
+					<td colspan="2">
+						<%=request.getAttribute("msg")==null ? "" : request.getAttribute("msg") %>
+					</td>
+				</tr>
+				<tr>
 					<td class="tdx">用户名：</td>
-					<td><input type="text" name="username"/></td>
+					<td><input type="text" name="username" value="<%=username%>"/></td>
 				</tr>
 				<tr>
 					<td class="tdx">密&nbsp;&nbsp; 码：</td>
@@ -20,13 +47,13 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="checkbox" name="remname" value="true"/>记住用户名
-						<input type="checkbox" name="autologin" value="true"/>30天内自动登陆
+						<input type="checkbox" name="remname" value="true" <%=findC==null ? "":"checked='checked'" %>/>记住用户名
+						<input type="checkbox" name="autologin" value="true"/>30天内自动登录
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align:center">
-						<input type="submit" value="登 陆"/>
+						<input type="submit" value="登录"/>
 					</td>
 				</tr>
 			</table>

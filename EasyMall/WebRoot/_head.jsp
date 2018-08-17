@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" session="false"%>
 <!DOCTYPE HTML>
 <link rel="stylesheet" href="css/head.css"/>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
@@ -6,8 +6,21 @@
 <div id="common_head">
 	<div id="line1">
 		<div id="content">
+			<%  
+				// 获取session
+				HttpSession session = request.getSession();
+				if(session == null || session.getAttribute("user") == null) {
+			%>
 			<a href="login.jsp">登录</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-			<a href="regist.jsp">注册</a>
+			<a href="regist.jsp">注册</a>			
+			<%	
+				} else {
+			%>
+			欢迎回来<%=request.getSession().getAttribute("user") %>
+			<a href=<%=request.getContextPath() + "/servlet/LogoutServlet"%>>注销</a>
+			<%
+				}
+		 	%>	
 		</div>
 	</div>
 	<div id="line2">

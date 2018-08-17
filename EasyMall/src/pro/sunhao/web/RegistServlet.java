@@ -16,7 +16,7 @@ import pro.sunhao.util.WebUtils;
 
 
 /**
- * 用于响应注册
+ * 控制用户注册
  * @author Administrator
  *
  */
@@ -47,7 +47,6 @@ public class RegistServlet extends HttpServlet {
 		ServletContext sc = this.getServletContext();
 		String encode = sc.getInitParameter("encode");
 		request.setCharacterEncoding(encode);		// 请求乱码
-		//request.setCharacterEncoding(InitServlet.encode);
 		response.setContentType("text/html; charset=" + encode);		// 应答乱码
 		// 2.接收表单参数
 		String username = request.getParameter("username");
@@ -56,9 +55,20 @@ public class RegistServlet extends HttpServlet {
 		String nickname = request.getParameter("nickname");
 		String email = request.getParameter("email");
 		String valistr = request.getParameter("valistr");
+		// 验证码验证
+		if(isEmpty(request, response, valistr, "验证码")) {		// 验证码非空
+			return;
+		} else {
+			String code = (String)request.getSession().getAttribute("valiCode");
+			if(!(valistr.toLowerCase()).equals(code.toLowerCase())) {			// 验证验证码
+				request.setAttribute("msg", "验证码错误");
+				request.getRequestDispatcher("/regist.jsp").forward(request, response);
+				return;
+			}			
+		}
 		// 3.各种验证
 		if(isEmpty(request, response, username, "用户名") || isEmpty(request, response, password, "密码") || isEmpty(request, response, password2, "确认密码")
-		|| isEmpty(request, response, nickname, "昵称") || isEmpty(request, response, email, "email") || isEmpty(request, response, valistr, "验证码") ) {
+		|| isEmpty(request, response, nickname, "昵称") || isEmpty(request, response, email, "email") ) {
 			return;				// 各种参数的非空验证
 		}
 		if(!password.equals(password2)) {							// 两次密码一致验证
@@ -72,8 +82,8 @@ public class RegistServlet extends HttpServlet {
 			request.getRequestDispatcher("/regist.jsp").forward(request, response);			// 请求转发给regist.jsp
 			return;
 		}		
-			// 验证码验证
-
+			
+		
 			
 		String sql1 = "select * from user where username=?";	// 用户名没有重复验证	
 		Connection conn1 = null;
@@ -113,7 +123,7 @@ public class RegistServlet extends HttpServlet {
 				response.addHeader("refresh", "3, url=" + request.getContextPath() + "/index.jsp");
 			} else {		// 注册失败
 				request.setAttribute("msg", "注册失败");
-				request.getRequestDispatcher("/regist.jsp").include(request, response);
+				request.getRequestDispatcher("/regist.jsp").forward(request, response);
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();	// 响应注册失败
