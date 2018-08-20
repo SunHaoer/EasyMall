@@ -26,7 +26,7 @@
 					canSubmit = this.checkPassword("password", "两次密码应该一致") && canSubmit;
 					// 邮箱格式验证
 					canSubmit = this.checkEmail("email", "邮箱格式不正确") && canSubmit;		
-					return canSubmit;
+					return true;
 				},
 				"checkEmail": function(name, msg) {		// 邮箱格式验证
 					var email = $("input[name='"+name+"']").val();		// 获取用户输入的邮箱内容
@@ -121,13 +121,14 @@
 			<table>
 				<tr>
 					<td colspan="2">
-						<%=request.getAttribute("msg")==null ? "" : request.getAttribute("msg") %>
+						<%--<%=request.getAttribute("msg")==null ? "" : request.getAttribute("msg") --%>
+						${requestScope.msg }
 					</td>
 				</tr>
 				<tr>
 					<td class="tds">用户名：</td>
 					<td>
-						<input type="text" name="username" value='<%=request.getParameter("username")==null?"":request.getParameter("username") %>' /><span id="msg_username"></span>
+						<input type="text" name="username" value='${param.username }' /><span id="msg_username"></span>
 					</td>
 				</tr>
 				<tr>
@@ -145,20 +146,20 @@
 				<tr>
 					<td class="tds">昵称：</td>
 					<td>
-						<input type="text" name="nickname" value='<%=request.getParameter("nickname")==null?"":request.getParameter("nickname") %>'/><span></span>
+						<input type="text" name="nickname" value='${param.nickname }'/><span></span>
 					</td>
 				</tr>
 				<tr>
 					<td class="tds">邮箱：</td>
 					<td>
-						<input type="text" name="email" value='<%=request.getParameter("email")==null?"":request.getParameter("email") %>'/><span></span>
+						<input type="text" name="email" value='${param.email }'/><span></span>
 					</td>
 					
 				</tr>
 				<tr>
 					<td class="tds">验证码：</td>
 					<td>
-						<input type="text" name="valistr" value='<%=request.getParameter("valistr")==null?"":request.getParameter("valistr") %>'/>
+						<input type="text" name="valistr" value='${param.valistr }'/>
 						<img id="vali_img" src=<%=request.getContextPath() + "/servlet/ValiImageServlet"%> width="" height="" alt="" /><span></span>
 					</td>
 				</tr>

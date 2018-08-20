@@ -1,4 +1,5 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" session="false"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML>
 <link rel="stylesheet" href="css/head.css"/>
 <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
@@ -6,6 +7,7 @@
 <div id="common_head">
 	<div id="line1">
 		<div id="content">
+		<%--
 			<%  
 				// 获取session
 				HttpSession session = request.getSession();
@@ -20,8 +22,18 @@
 			<a href=<%=request.getContextPath() + "/servlet/LogoutServlet"%>>注销</a>
 			<%
 				}
-		 	%>	
-		</div>
+		 	%>			
+		 --%>
+			<c:if test="${empty sessionScope.user}">
+				<a href="login.jsp">登录</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href="regist.jsp">注册</a>
+			</c:if>
+			<c:if test="${not empty sessionScope.user}">
+				欢迎回来,${sessionScope.user }
+				<a href=<%=request.getContextPath() + "/servlet/LogoutServlet"%>>&nbsp;&nbsp;|&nbsp;&nbsp;注销</a>				
+			</c:if>
+			
+    	</div>
 	</div>
 	<div id="line2">
 		<img id="logo" src="img/head/logo.jpg"/>
