@@ -1,5 +1,6 @@
 <%@page import="java.net.URLDecoder"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -12,6 +13,9 @@
 		<title>EasyMall欢迎您登录</title>
 	</head>
 	<body>
+		
+	
+	 
 		<%
 			Cookie[] cs = request.getCookies();		// 获取用户携带的cookie
 			Cookie findC = null;
@@ -34,7 +38,8 @@
 			<table>
 				<tr>
 					<td colspan="2">
-						<%=request.getAttribute("msg")==null ? "" : request.getAttribute("msg") %>
+						<%--<%=request.getAttribute("msg")==null ? "" : request.getAttribute("msg") --%>
+						${requestScope.msg }
 					</td>
 				</tr>
 				<tr>
@@ -47,7 +52,10 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="checkbox" name="remname" value="true" <%=findC==null ? "":"checked='checked'" %>/>记住用户名
+						<input type="checkbox" name="remname" value="true" 
+						<c:if test="${empty cookie.remname}">""</c:if>
+						<c:if test="${not empty cookie.remname}">checked="checked"</c:if> 
+						/>记住用户名
 						<input type="checkbox" name="autologin" value="true"/>30天内自动登录
 					</td>
 				</tr>

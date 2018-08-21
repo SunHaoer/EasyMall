@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import pro.sunhao.service.UserService;
+import pro.sunhao.service.UserServiceImpl;
 import pro.sunhao.util.JDBCUtils;
 
 /**
@@ -29,6 +31,17 @@ public class AjaxCheckUsernameServlet extends HttpServlet {
 		response.setContentType("text/html; charset=" + encode);		// 应答乱码
 		String username = request.getParameter("username");			// 获取请求参数
 		username = new String(username.getBytes("iso8859-1"), encode);
+		
+		
+		UserService service = new UserServiceImpl();
+		boolean hasUsername = service.hasUsername(username);
+		if(hasUsername) {		// 用户名已存在
+			response.getWriter().write("用户名已存在");
+		} else {				// 用户名不存在
+			response.getWriter().write("用户名可以使用");
+		}
+		
+/*		
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -48,6 +61,7 @@ public class AjaxCheckUsernameServlet extends HttpServlet {
 		} finally {
 			JDBCUtils.close(conn, ps, rs);
 		}
+*/
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

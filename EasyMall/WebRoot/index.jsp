@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" buffer="0kb"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />

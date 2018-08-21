@@ -26,7 +26,7 @@
 					canSubmit = this.checkPassword("password", "两次密码应该一致") && canSubmit;
 					// 邮箱格式验证
 					canSubmit = this.checkEmail("email", "邮箱格式不正确") && canSubmit;		
-					return true;
+					return canSubmit;
 				},
 				"checkEmail": function(name, msg) {		// 邮箱格式验证
 					var email = $("input[name='"+name+"']").val();		// 获取用户输入的邮箱内容

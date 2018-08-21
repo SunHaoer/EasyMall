@@ -29,7 +29,7 @@
 				<a href="regist.jsp">注册</a>
 			</c:if>
 			<c:if test="${not empty sessionScope.user}">
-				欢迎回来,${sessionScope.user }
+				欢迎回来,${sessionScope.user.username }
 				<a href=<%=request.getContextPath() + "/servlet/LogoutServlet"%>>&nbsp;&nbsp;|&nbsp;&nbsp;注销</a>				
 			</c:if>
 			

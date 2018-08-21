@@ -13,6 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import pro.sunhao.domain.User;
+import pro.sunhao.exception.MsgException;
+import pro.sunhao.factory.BaseFactory;
+import pro.sunhao.factory.UserServiceFactory;
+import pro.sunhao.service.UserService;
+import pro.sunhao.service.UserServiceImpl;
 import pro.sunhao.util.JDBCUtils;
 
 
@@ -28,7 +34,7 @@ public class LoginServlet extends HttpServlet {
 		// 处理乱码
 		String encode = this.getServletContext().getInitParameter("encode");
 		request.setCharacterEncoding(encode);
-		response.setContentType("text/html; charset=utf-8");
+		response.setContentType("text/html; charset=" + encode);
 		// 获取请求参数
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
@@ -44,6 +50,33 @@ public class LoginServlet extends HttpServlet {
 		}
 		cookie.setPath(request.getContextPath() + "/");
 		response.addCookie(cookie);
+		
+		//UserService service = new UserServiceImp();
+		//UserService service = UserServiceFactory.getUserServiceFactory().getInstance();
+		UserService service = BaseFactory.getFactory().GetInstance(UserService.class);
+		User user = null;
+		try {
+			user = service.login(username, password);
+		} catch (MsgException e) {
+			e.printStackTrace();
+		}
+		if(user != null) {		// 登录成功
+			HttpSession session =  request.getSession();
+			session.setAttribute("user", user);		// 保存用户登录状态
+			// 保证关闭浏览器重启后session依旧生效
+			Cookie c = new Cookie("JSESSIONID", session.getId());
+			c.setMaxAge(60 * 30);
+			c.setPath(request.getContextPath() + "/");
+			response.getWriter().write("登录成功");
+			response.setHeader("refresh", "2;url=" + request.getContextPath() + "/index.jsp");	
+			return;			
+		} else {				// 登录失败
+			request.setAttribute("msg", "用户名或密码错误");
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
+			return;			
+		}
+		
+/*		
 		// 实现登录逻辑
 		String sql = "select * from user where username=? and password=?";
 		Connection conn = null;
@@ -78,6 +111,7 @@ public class LoginServlet extends HttpServlet {
 		} finally {
 			JDBCUtils.close(conn, ps, rs);
 		}
+*/
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

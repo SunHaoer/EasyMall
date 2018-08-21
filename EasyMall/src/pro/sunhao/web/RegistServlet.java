@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import pro.sunhao.domain.User;
+import pro.sunhao.factory.BaseFactory;
+import pro.sunhao.factory.UserServiceFactory;
+import pro.sunhao.service.UserService;
+import pro.sunhao.service.UserServiceImpl;
 import pro.sunhao.util.JDBCUtils;
 import pro.sunhao.util.WebUtils;
 
@@ -30,7 +35,6 @@ public class RegistServlet extends HttpServlet {
 	 * @throws IOException 
 	 * @throws ServletException 
 	 */
-	
 	public boolean isEmpty(HttpServletRequest request, HttpServletResponse response, String name, String str) 
 			throws ServletException, IOException {
 		if(WebUtils.isEmpty(name)) {		// 用户名非空验证
@@ -56,7 +60,7 @@ public class RegistServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String valistr = request.getParameter("valistr");
 		// 验证码验证
-		if(isEmpty(request, response, valistr, "验证码")) {		// 验证码非空
+		if(isEmpty(request, response, valistr, "验证码")) {		// 验证码为空
 			return;
 		} else {
 			String code = (String)request.getSession().getAttribute("valiCode");
@@ -83,8 +87,29 @@ public class RegistServlet extends HttpServlet {
 			return;
 		}		
 			
+		// 用户名没有重复验证
+		//UserService service = UserServiceFactory.getUserServiceFactory().getInstance();
+		UserService service = BaseFactory.getFactory().GetInstance(UserService.class);
+		boolean hasUsername = service.hasUsername(username);
+		if(hasUsername) {		// 有重复用户名
+			request.setAttribute("msg", "用户名已存在");
+			request.getRequestDispatcher("/regist.jsp").forward(request, response);
+			return;			
+		} 
 		
-			
+		// 4.执行业务逻辑
+		User user = new User(-1, username, password2, nickname, email);		// id=-1是因为是后期sql语句用不到，传入什么都行
+		boolean isRegister = service.registerUser(user);
+		if(isRegister) {		// 注册成功
+			response.getWriter().write("注册成功，3秒后跳转");
+			response.addHeader("refresh", "3, url=" + request.getContextPath() + "/index.jsp");
+		} else {		// 注册失败
+			request.setAttribute("msg", "注册失败");
+			request.getRequestDispatcher("/regist.jsp").forward(request, response);
+			return;
+		}
+		
+/*			
 		String sql1 = "select * from user where username=?";	// 用户名没有重复验证	
 		Connection conn1 = null;
 		PreparedStatement ps1 = null;
@@ -130,6 +155,7 @@ public class RegistServlet extends HttpServlet {
 		} finally {
 			JDBCUtils.close(conn2, ps2, rs2);
 		}
+*/
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
