@@ -10,6 +10,26 @@
   	<param-name>encode</param-name>
   	<param-value>utf-8</param-value>
   </context-param>
+  <!-- 配置filter -->
+  <filter>
+  	<filter-name>EncodingFilter</filter-name>
+  	<filter-class>pro.sunhao.filter.EncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>EncodingFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+   <filter>
+  	<filter-name>AutoLoginFilter</filter-name>
+  	<filter-class>pro.sunhao.filter.AutoLoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>AutoLoginFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- 配置servlet -->
   <servlet>
     <servlet-name>RegistServlet</servlet-name>
     <servlet-class>pro.sunhao.web.RegistServlet</servlet-class>
@@ -31,10 +51,6 @@
     <servlet-class>pro.sunhao.web.LogoutServlet</servlet-class>
   </servlet>
 
-
-
-
-
   <servlet-mapping>
     <servlet-name>RegistServlet</servlet-name>
     <url-pattern>/servlet/RegistServlet</url-pattern>
@@ -54,7 +70,7 @@
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/servlet/LogoutServlet</url-pattern>
-  </servlet-mapping>	
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>

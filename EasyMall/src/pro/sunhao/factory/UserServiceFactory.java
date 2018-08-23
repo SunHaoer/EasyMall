@@ -23,7 +23,7 @@ public class UserServiceFactory {
 	private static UserServiceFactory factory = new UserServiceFactory();		// 私有静态本类唯一实例
 	
 	public static UserServiceFactory getUserServiceFactory() {		// 公有静态方法获取factory
-		System.out.println("2222");
+		//System.out.println("2222");
 		return factory;
 	}
 	
@@ -31,7 +31,7 @@ public class UserServiceFactory {
 	private Properties prop = new Properties();
 	
 	public UserService getInstance() {
-		System.out.println("33333");
+		//System.out.println("33333");
 		UserService service = null;
 		String value = prop.getProperty("UserService");		// 获取配置文件中配置的实现类的包名，类名
 		Class c = null;

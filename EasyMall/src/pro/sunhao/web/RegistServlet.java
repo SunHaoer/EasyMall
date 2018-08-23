@@ -48,10 +48,10 @@ public class RegistServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 1.处理乱码
-		ServletContext sc = this.getServletContext();
-		String encode = sc.getInitParameter("encode");
-		request.setCharacterEncoding(encode);		// 请求乱码
-		response.setContentType("text/html; charset=" + encode);		// 应答乱码
+		//ServletContext sc = this.getServletContext();
+		//String encode = sc.getInitParameter("encode");
+		//request.setCharacterEncoding(encode);		// 请求乱码
+		//response.setContentType("text/html; charset=" + encode);		// 应答乱码
 		// 2.接收表单参数
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");

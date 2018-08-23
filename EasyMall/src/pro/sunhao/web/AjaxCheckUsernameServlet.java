@@ -25,12 +25,12 @@ public class AjaxCheckUsernameServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ServletContext sc = this.getServletContext();
-		String encode = sc.getInitParameter("encode");
-		request.setCharacterEncoding(encode);		// 请求乱码
-		response.setContentType("text/html; charset=" + encode);		// 应答乱码
+		//ServletContext sc = this.getServletContext();
+		//String encode = sc.getInitParameter("encode");
+		//request.setCharacterEncoding(encode);		// 请求乱码
+		//response.setContentType("text/html; charset=" + encode);		// 应答乱码
 		String username = request.getParameter("username");			// 获取请求参数
-		username = new String(username.getBytes("iso8859-1"), encode);
+		//username = new String(username.getBytes("iso8859-1"), encode);
 		
 		
 		UserService service = new UserServiceImpl();

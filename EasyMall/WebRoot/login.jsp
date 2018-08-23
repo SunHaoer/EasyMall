@@ -14,8 +14,6 @@
 	</head>
 	<body>
 		
-	
-	 
 		<%
 			Cookie[] cs = request.getCookies();		// 获取用户携带的cookie
 			Cookie findC = null;

@@ -20,6 +20,7 @@ import pro.sunhao.factory.UserServiceFactory;
 import pro.sunhao.service.UserService;
 import pro.sunhao.service.UserServiceImpl;
 import pro.sunhao.util.JDBCUtils;
+import sun.awt.RepaintArea;
 
 
 /**
@@ -33,16 +34,19 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// 处理乱码
 		String encode = this.getServletContext().getInitParameter("encode");
-		request.setCharacterEncoding(encode);
-		response.setContentType("text/html; charset=" + encode);
+		//request.setCharacterEncoding(encode);
+		//response.setContentType("text/html; charset=" + encode);
 		// 获取请求参数
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String remname = request.getParameter("remname");
+		String autoLogin = request.getParameter("autologin");
 		// 表单验证(不需要)
 		
 		// 实现记住用户名
 		Cookie cookie = new Cookie("remname", URLEncoder.encode(username, encode));
+		//System.out.println(cookie.getValue());
+		//Cookie cookie = new Cookie("remname", username);
 		if(remname != null) {			// 勾选了记住用户名
 			cookie.setMaxAge(60 * 60 * 24 * 30);
 		} else {						// 没勾选记住用户名
@@ -61,6 +65,18 @@ public class LoginServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		if(user != null) {		// 登录成功
+			//System.out.println(value);
+			cookie = new Cookie("autologin", username + "#" + password);
+			//System.out.println(cookie.getValue());
+			if("true".equals(autoLogin)) {	//自动登录
+				cookie.setMaxAge(60 * 60 * 24 * 30);
+				//System.out.println(value);
+			} else {
+				cookie.setMaxAge(0);
+			}
+			cookie.setPath(request.getContextPath() + "/");
+			response.addCookie(cookie);
+			
 			HttpSession session =  request.getSession();
 			session.setAttribute("user", user);		// 保存用户登录状态
 			// 保证关闭浏览器重启后session依旧生效
