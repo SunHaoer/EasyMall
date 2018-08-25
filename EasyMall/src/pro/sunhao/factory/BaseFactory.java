@@ -1,11 +1,13 @@
 package pro.sunhao.factory;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * 通过泛型和发射生成对应类的实例的factory
+ * @author Administrator
+ *
+ */
 public class BaseFactory {
 	// 单例
 	private Properties prop = new Properties();		// 读取配置文件的工具
@@ -32,9 +34,10 @@ public class BaseFactory {
 	 * @param infc 接口的class对象
 	 * @return 该接口实现类的实例 || null
 	 */
-	public <T> T GetInstance(Class<T> infc) {
+	public <T> T getInstance(Class<T> infc) {
 		T t = null;
 		String value = prop.getProperty(infc.getSimpleName());	// 获取配置文件中配置的实现类的包名，类名
+		System.out.println("++" + value);
 		try {
 			Class c = Class.forName(value);
 			if(c != null) {

@@ -9,14 +9,14 @@ import pro.sunhao.factory.UserDaoFactory;
 import pro.sunhao.factory.UserServiceFactory;
 
 /**
- * UserService接口的实现类
+ * 为User处理业务逻辑
  * @author Administrator
  *
  */
 public class UserServiceImpl implements UserService {
 	//private UserDao dao = new UserDaoImpl();
 	//private UserDao dao = UserDaoFactory.getFactory().getInstance();
-	private UserDao dao = BaseFactory.getFactory().GetInstance(UserDao.class);
+	private UserDao dao = BaseFactory.getFactory().getInstance(UserDao.class);
 	
 	@Override
 	public boolean hasUsername(String username) {

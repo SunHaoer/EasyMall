@@ -1,11 +1,7 @@
 package pro.sunhao.web;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import pro.sunhao.domain.User;
 import pro.sunhao.factory.BaseFactory;
-import pro.sunhao.factory.UserServiceFactory;
 import pro.sunhao.service.UserService;
-import pro.sunhao.service.UserServiceImpl;
-import pro.sunhao.util.JDBCUtils;
 import pro.sunhao.util.WebUtils;
 
 
@@ -89,7 +82,7 @@ public class RegistServlet extends HttpServlet {
 			
 		// 用户名没有重复验证
 		//UserService service = UserServiceFactory.getUserServiceFactory().getInstance();
-		UserService service = BaseFactory.getFactory().GetInstance(UserService.class);
+		UserService service = BaseFactory.getFactory().getInstance(UserService.class);
 		boolean hasUsername = service.hasUsername(username);
 		if(hasUsername) {		// 有重复用户名
 			request.setAttribute("msg", "用户名已存在");

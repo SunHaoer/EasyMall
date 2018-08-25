@@ -9,7 +9,7 @@ import pro.sunhao.exception.MsgException;
 import pro.sunhao.util.JDBCUtils;
 
 /**
- * UserDao的实现类
+ * 为用户提供数据库查询的dao
  * @author Administrator
  *
  */

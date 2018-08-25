@@ -50,6 +50,11 @@
     <servlet-name>LogoutServlet</servlet-name>
     <servlet-class>pro.sunhao.web.LogoutServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ManageAddProdServlet</servlet-name>
+    <servlet-class>pro.sunhao.backend.web.ManageAddProdServlet</servlet-class>
+  </servlet>
+
 
   <servlet-mapping>
     <servlet-name>RegistServlet</servlet-name>
@@ -70,6 +75,10 @@
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/servlet/LogoutServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ManageAddProdServlet</servlet-name>
+    <url-pattern>/servlet/ManageAddProdServlet</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>

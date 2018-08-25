@@ -1,7 +1,6 @@
 package pro.sunhao.web;
 
 import java.io.IOException;
-import java.net.HttpCookie;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;

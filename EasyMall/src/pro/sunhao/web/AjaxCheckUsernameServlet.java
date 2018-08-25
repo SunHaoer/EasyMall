@@ -1,11 +1,7 @@
 package pro.sunhao.web;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import pro.sunhao.service.UserService;
 import pro.sunhao.service.UserServiceImpl;
-import pro.sunhao.util.JDBCUtils;
 
 /**
  * 用于响应AJAX的前端判断用户名是否为空

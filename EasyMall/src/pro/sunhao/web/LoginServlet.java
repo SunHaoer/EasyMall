@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
 		
 		//UserService service = new UserServiceImp();
 		//UserService service = UserServiceFactory.getUserServiceFactory().getInstance();
-		UserService service = BaseFactory.getFactory().GetInstance(UserService.class);
+		UserService service = BaseFactory.getFactory().getInstance(UserService.class);
 		User user = null;
 		try {
 			user = service.login(username, password);
@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 		}
 		if(user != null) {		// 登录成功
 			//System.out.println(value);
-			cookie = new Cookie("autologin", username + "#" + password);
+			cookie = new Cookie("autologin", URLEncoder.encode(username, encode) + "#" + password);
 			//System.out.println(cookie.getValue());
 			if("true".equals(autoLogin)) {	//自动登录
 				cookie.setMaxAge(60 * 60 * 24 * 30);

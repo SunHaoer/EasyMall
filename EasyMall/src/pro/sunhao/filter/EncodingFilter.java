@@ -2,7 +2,6 @@ package pro.sunhao.filter;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Enumeration;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
- * filter拦截器，处理全局乱码
+ * 从全局处理乱码的filter
  * @author Administrator
  *
  */

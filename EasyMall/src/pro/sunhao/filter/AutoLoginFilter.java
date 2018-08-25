@@ -1,6 +1,7 @@
 package pro.sunhao.filter;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -17,6 +18,11 @@ import pro.sunhao.exception.MsgException;
 import pro.sunhao.factory.BaseFactory;
 import pro.sunhao.service.UserService;
 
+/**
+ * 实现自动登录的filter
+ * @author Administrator
+ *
+ */
 public class AutoLoginFilter implements Filter {
 
 	@Override
@@ -41,11 +47,12 @@ public class AutoLoginFilter implements Filter {
 			}
 			if(autoLoginCookie != null) {			// 存在autoLogin
 				//System.out.println("我要自动登录");
-				System.out.println(autoLoginCookie.getValue());
+				//System.out.println(autoLoginCookie.getValue());
 				String username = autoLoginCookie.getValue().split("#")[0];
+				username = URLEncoder.encode(username, req.getServletContext().getInitParameter("encode"));
 				String password = autoLoginCookie.getValue().split("#")[1];
 				//System.out.println(username + " " + password);
-				UserService service = BaseFactory.getFactory().GetInstance(UserService.class);
+				UserService service = BaseFactory.getFactory().getInstance(UserService.class);
 				try {
 					User user = service.login(username, password);
 					if(user != null) {

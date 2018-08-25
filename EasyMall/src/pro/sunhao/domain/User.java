@@ -3,7 +3,7 @@ package pro.sunhao.domain;
 import java.io.Serializable;
 
 /**
- * 封装用户信息的JavaBean
+ * 封装用户信息的Bean
  * @author Administrator
  *
  */
