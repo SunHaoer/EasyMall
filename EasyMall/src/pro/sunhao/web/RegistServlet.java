@@ -28,16 +28,6 @@ public class RegistServlet extends HttpServlet {
 	 * @throws IOException 
 	 * @throws ServletException 
 	 */
-	public boolean isEmpty(HttpServletRequest request, HttpServletResponse response, String name, String str) 
-			throws ServletException, IOException {
-		if(WebUtils.isEmpty(name)) {		// 用户名非空验证
-			request.setAttribute("msg", str + "不能为空");			// 添加错误信息				
-			request.getRequestDispatcher("/regist.jsp").forward(request, response);		// 转发到regist.jsp
-			return true;
-		}
-		return false;
-	}
-	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// 1.处理乱码
@@ -94,8 +84,8 @@ public class RegistServlet extends HttpServlet {
 		User user = new User(-1, username, password2, nickname, email);		// id=-1是因为是后期sql语句用不到，传入什么都行
 		boolean isRegister = service.registerUser(user);
 		if(isRegister) {		// 注册成功
-			response.getWriter().write("注册成功，3秒后跳转");
-			response.addHeader("refresh", "3, url=" + request.getContextPath() + "/index.jsp");
+			response.getWriter().write("注册成功，2秒后跳转");
+			response.addHeader("refresh", "2, url=" + request.getContextPath() + "/index.jsp");
 		} else {		// 注册失败
 			request.setAttribute("msg", "注册失败");
 			request.getRequestDispatcher("/regist.jsp").forward(request, response);
@@ -150,6 +140,16 @@ public class RegistServlet extends HttpServlet {
 		}
 */
 	}
+	
+	public boolean isEmpty(HttpServletRequest request, HttpServletResponse response, String name, String str) 
+			throws ServletException, IOException {
+		if(WebUtils.isEmpty(name)) {		// 用户名非空验证
+			request.setAttribute("msg", str + "不能为空");			// 添加错误信息				
+			request.getRequestDispatcher("/regist.jsp").forward(request, response);		// 转发到regist.jsp
+			return true;
+		}
+		return false;
+	}	
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

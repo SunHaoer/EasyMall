@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 
 import javax.servlet.ServletContext;
@@ -23,6 +24,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import pro.sunhao.domain.Prod;
 import pro.sunhao.factory.BaseFactory;
 import pro.sunhao.service.ProdService;
+import pro.sunhao.util.WebUtils;
 
 /**
  * 后台管理商品的servelet
@@ -75,8 +77,6 @@ public class ManageAddProdServlet extends HttpServlet {
 						String savePath = sc.getRealPath(uploadPath + midPath);		// 获取真实保存路径
 						new File(savePath).mkdirs();		// 在硬盘上创建对应的目录结构
 						InputStream in = fileItem.getInputStream();		// 获取图片输入流
-						System.out.println(savePath + " " + saveName);
-						//System.out.println("------------");
 						FileOutputStream out = new FileOutputStream(savePath + "/" + saveName);		// 图片输出流
 						byte[] array = new byte[100];
 						int len = in.read(array);
@@ -94,9 +94,15 @@ public class ManageAddProdServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		// 2. 表单验证
-		
+		if(isEmpty(request, response, paramMap.get("name"), "商品名称") || isEmpty(request, response, paramMap.get("price"), "商品单价") 
+		|| isEmpty(request, response, paramMap.get("cname"), "商品种类") || isEmpty(request, response, paramMap.get("pnum"), "库存实例") 
+		|| isEmpty(request, response, paramMap.get("imgurl"), "商品图片") || isEmpty(request, response, paramMap.get("description"), "商品描述")) {
+			return;
+		}
+		if(!isDigit(request, response, paramMap.get("price"), "商品单价") || !isDigit(request, response, paramMap.get("pnum"), "库存数量")) {
+			return;
+		}
 		// 3. 把参数封装成Prod对象
-		//System.out.println(paramMap.get("price"));
 		Prod prod = new Prod();
 		prod.setName(paramMap.get("name"));
 		prod.setPrice(Double.parseDouble(paramMap.get("price")));
@@ -105,7 +111,6 @@ public class ManageAddProdServlet extends HttpServlet {
 		prod.setImgurl(paramMap.get("imgurl"));
 		prod.setDescription(paramMap.get("description"));
 		// 4. service执行逻辑
-		//System.out.println(ProdServiceImpl.class);
 		ProdService service = BaseFactory.getFactory().getInstance(ProdService.class);
 		boolean isAdd = false;		// 表示商品是否添加成功
 		try {
@@ -121,6 +126,32 @@ public class ManageAddProdServlet extends HttpServlet {
 			response.getWriter().write("添加失败");
 			response.setHeader("refresh", "2;rul=" + request.getContextPath() + "/backend/manageAddProd.jsp");
 		}
+	}
+	
+	public boolean isEmpty(HttpServletRequest request, HttpServletResponse response, String name, String str) 
+			throws ServletException, IOException {					// 参数非空验证
+		if(WebUtils.isEmpty(name)) {		
+			request.setAttribute("msg", str + "不能为空");			// 添加错误信息				
+			request.getRequestDispatcher("/backend/manageAddProd.jsp").forward(request, response);		// 转发到regist.jsp
+			return true;
+		}
+		return false;
+	}	
+	
+	public boolean isDigit(HttpServletRequest request, HttpServletResponse response, String name, String str) 
+			throws ServletException, IOException {		// 参数是否为数字
+		try {
+			double num = Double.parseDouble(name);
+			if(num < 0 || (name.contains(".") && name.length() - name.indexOf(".") > 3)) {
+				throw new NumberFormatException();
+			}
+		} catch (Exception e) {
+			request.setAttribute("msg", str + "不能为非数字");			// 添加错误信息				
+			request.getRequestDispatcher("/backend/manageAddProd.jsp").forward(request, response);		// 转发到regist.jsp   			
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

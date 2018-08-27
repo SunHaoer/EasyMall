@@ -37,7 +37,6 @@ public class BaseFactory {
 	public <T> T getInstance(Class<T> infc) {
 		T t = null;
 		String value = prop.getProperty(infc.getSimpleName());	// 获取配置文件中配置的实现类的包名，类名
-		System.out.println("++" + value);
 		try {
 			Class c = Class.forName(value);
 			if(c != null) {

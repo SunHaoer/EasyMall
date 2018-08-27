@@ -14,6 +14,7 @@
 	</head>
 	<body>
 		<h1>EasyMall_添加商品</h1>
+		${requestScope.msg }	
 		<hr>
 			<form action="<%=basePath%>/servlet/ManageAddProdServlet" method="POST" enctype="multipart/form-data">
 				<table align="center" border="1" cellspacing="0px" cellpadding="5px">
