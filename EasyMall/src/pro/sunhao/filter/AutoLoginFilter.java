@@ -40,10 +40,12 @@ public class AutoLoginFilter implements Filter {
 			//System.out.println("没有登录");
 			Cookie[] cookies = req.getCookies();
 			Cookie autoLoginCookie = null;
-			for(Cookie c : cookies) {
-				if("autologin".equals(c.getName())) {		
-					autoLoginCookie = c;
-				}
+			if(cookies != null) {
+				for(Cookie c : cookies) {
+					if("autologin".equals(c.getName())) {		
+						autoLoginCookie = c;
+					}
+				}				
 			}
 			if(autoLoginCookie != null) {			// 存在autoLogin
 				//System.out.println("我要自动登录");

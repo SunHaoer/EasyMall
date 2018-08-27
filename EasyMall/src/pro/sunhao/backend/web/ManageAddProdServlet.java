@@ -59,6 +59,7 @@ public class ManageAddProdServlet extends HttpServlet {
 //						String value = fileItem.getString(encode);
 //						System.out.println(name + " " + value);
 						paramMap.put(fileItem.getFieldName(), fileItem.getString(encode));
+						
 					} else {				// 上传图片
 						String fileName = fileItem.getName();		// 图片文件名
 						//fileName = fileName.substring(fileName.lastIndexOf("\\") + 1);		// 处理ie的bug
@@ -76,6 +77,7 @@ public class ManageAddProdServlet extends HttpServlet {
 						paramMap.put("imgurl", imageUrl);
 						String savePath = sc.getRealPath(uploadPath + midPath);		// 获取真实保存路径
 						new File(savePath).mkdirs();		// 在硬盘上创建对应的目录结构
+						//System.out.println(savePath);
 						InputStream in = fileItem.getInputStream();		// 获取图片输入流
 						FileOutputStream out = new FileOutputStream(savePath + "/" + saveName);		// 图片输出流
 						byte[] array = new byte[100];
@@ -84,6 +86,9 @@ public class ManageAddProdServlet extends HttpServlet {
 							out.write(array, 0, len);
 							len = in.read(array);
 						}
+//						File file = new File(savePath + "/" + saveName);
+//						System.out.println(savePath + "/" + saveName);
+//						System.out.println(file.exists());
 						in.close();
 						out.close();
 						fileItem.delete();

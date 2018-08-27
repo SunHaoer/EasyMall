@@ -1,5 +1,7 @@
 package pro.sunhao.dao;
 
+import java.util.List;
+
 import pro.sunhao.domain.Prod;
 import pro.sunhao.domain.ProdCategory;
 import pro.sunhao.exception.MsgException;
@@ -27,4 +29,10 @@ public interface ProdDao {
 	 * @return true(添加成功) || false(添加失败)
 	 */
 	boolean insertProd(Prod prod);
+	
+	/**
+	 * 查询所有商品信息的方法
+	 * @return 商品信息列表
+	 */
+	List<Prod> listProd();
 }

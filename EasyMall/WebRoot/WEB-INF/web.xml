@@ -5,11 +5,18 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
   <display-name></display-name>
+  
   <!-- 配置当前web应用的初始化参数 -->
   <context-param>
   	<param-name>encode</param-name>
   	<param-value>utf-8</param-value>
   </context-param>
+  
+  <!-- 配置监听器 -->
+  <listener>
+  	<listener-class>pro.sunhao.listener.EasyMallServletContextListener</listener-class>
+  </listener>
+  
   <!-- 配置filter -->
   <filter>
   	<filter-name>EncodingFilter</filter-name>
@@ -63,6 +70,21 @@
     <servlet-name>ManageAddProdServlet</servlet-name>
     <servlet-class>pro.sunhao.backend.web.ManageAddProdServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ProdImageServlet</servlet-name>
+    <servlet-class>pro.sunhao.web.ProdImageServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ProdListServlet</servlet-name>
+    <servlet-class>pro.sunhao.web.ProdListServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ScreenListServlet</servlet-name>
+    <servlet-class>pro.sunhao.backend.web.ScreenListServlet</servlet-class>
+  </servlet>
+
+
+
 
 
   <servlet-mapping>
@@ -88,6 +110,18 @@
   <servlet-mapping>
     <servlet-name>ManageAddProdServlet</servlet-name>
     <url-pattern>/servlet/ManageAddProdServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ProdImageServlet</servlet-name>
+    <url-pattern>/servlet/ProdImageServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ProdListServlet</servlet-name>
+    <url-pattern>/servlet/ProdListServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ScreenListServlet</servlet-name>
+    <url-pattern>/servlet/ScreenListServlet</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
