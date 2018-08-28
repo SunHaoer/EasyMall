@@ -48,7 +48,6 @@ public class EncodingFilter implements Filter {
 			}
 		}
 */
-		//System.out.println(response == null);
 		chain.doFilter(req, response);
 	}	
 
@@ -91,7 +90,6 @@ public class EncodingFilter implements Filter {
 				}
 				hasEncode = true;
 			}
-			//System.out.println(parameterMap == null);
 			return parameterMap;
 		}
 

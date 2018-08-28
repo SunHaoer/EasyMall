@@ -35,4 +35,40 @@ public interface ProdDao {
 	 * @return 商品信息列表
 	 */
 	List<Prod> listProd();
+	
+	/**
+	 * 根据商品id更新商品数量
+	 * @param pid
+	 * @param pnum
+	 * @return true(更新成功) || false(更新失败)
+	 */
+	boolean updatePnumByPid(int pid, int pnum);
+	
+	/**
+	 * 根据商品编号查商品种类编号
+	 * @param pid
+	 * @return 商品种类编号cid
+	 */
+	int getCidByPid(Integer pid);
+	
+	/**
+	 * 根据商品种类编号，获取商品列表
+	 * @param cid
+	 * @return 该种类的商品列表
+	 */
+	List<Prod> listProdByCid(int cid);
+	
+	/**
+	 * 根据商品种类编号删除商品种类
+	 * @param cid
+	 * @return true(删除成功) || false(删除失败)
+	 */
+	boolean deleteProdCategroyByCid(int cid);
+	
+	/**
+	 * 根据商品编号删除商品
+	 * @param pid
+	 * @return true(删除成功) || false(删除失败)
+	 */
+	boolean deleteProdByPid(Integer pid);
 }

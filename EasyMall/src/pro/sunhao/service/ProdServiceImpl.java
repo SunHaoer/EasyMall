@@ -58,4 +58,34 @@ public class ProdServiceImpl implements ProdService {
 		return list;
 	}
 
+	@Override
+	public boolean updatePnum(int pid, int pnum) {
+		boolean isUpdate = false;
+		isUpdate = dao.updatePnumByPid(pid, pnum);
+		return isUpdate;
+	}
+
+	@Override
+	public boolean deleteProd(Integer pid) {
+		boolean isDelete = false;
+		try {
+			TransactionManager.startTransaction();		// 开启事务
+			int cid = dao.getCidByPid(pid);				// 查询到商品种类编号
+			if(cid == 0) {			// 该商品不存在
+				return false;
+			}
+			List<Prod> list = dao.listProdByCid(cid);	// 获取该种类的商品列表
+			if(list.size() == 1) {		// 该商品唯一，删除该种类
+				isDelete = dao.deleteProdCategroyByCid(cid);		
+			} 
+			isDelete = dao.deleteProdByPid(pid);		// 删除商品
+			TransactionManager.commitTransaction();		// 事务提交
+		} catch (Exception e) {
+			e.printStackTrace();
+			TransactionManager.rollbackTransaction();	// 事务回滚
+		} finally {
+			TransactionManager.closeConn();				// 关闭该事务的连接对象
+		}
+		return isDelete;
+	}
 }

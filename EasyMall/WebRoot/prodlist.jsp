@@ -26,10 +26,12 @@
 		<div id="prod_content">
 			<c:forEach items="${prods}" var="prod">
 				<div id="prod_div">
-				
-					<img src="${app}/servlet/ProdImageServlet?imgurl=${prod.imgurl}"></img>
-					<div id="prod_name_div">${prod.name}</div>
-					<div id="prod_price_div">￥${prod.price}元</div>
+					<%request.setAttribute("prods", request.getAttribute("prods")); %>
+					<a href="<%=basePath%>/servlet/ProdInfoServlet?prod=${prod}">
+						<img src="${app}/servlet/ProdImageServlet?imgurl=${prod.imgurl}"></img>
+						<div id="prod_name_div">${prod.name}</div>
+						<div id="prod_price_div">￥${prod.price}元</div>
+					</a>	
 					<div>
 						<div id="gotocart_div">
 							<a href="#">加入购物车</a>

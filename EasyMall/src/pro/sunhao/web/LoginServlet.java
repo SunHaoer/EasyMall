@@ -65,12 +65,9 @@ public class LoginServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		if(user != null) {		// 登录成功
-			//System.out.println(value);
 			cookie = new Cookie("autologin", URLEncoder.encode(username, encode) + "#" + password);
-			//System.out.println(cookie.getValue());
 			if("true".equals(autoLogin)) {	//自动登录
 				cookie.setMaxAge(60 * 60 * 24 * 30);
-				//System.out.println(value);
 			} else {
 				cookie.setMaxAge(0);
 			}

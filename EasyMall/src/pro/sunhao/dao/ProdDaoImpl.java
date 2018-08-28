@@ -71,8 +71,6 @@ public class ProdDaoImpl implements ProdDao {
 		PreparedStatement ps = null;
 		try {
 			conn = TransactionManager.getConn();
-			//System.out.println(conn);
-			//System.out.println("------------------");
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, prod.getName());
 			ps.setDouble(2, prod.getPrice());
@@ -82,7 +80,6 @@ public class ProdDaoImpl implements ProdDao {
 			ps.setString(6, prod.getDescription());
 			int line = ps.executeUpdate();
 			if(line > 0) {		// 插入成功
-				//System.out.println(line + " " + prod.getName());
 				return true;
 			}
 		} catch (Exception e) {
@@ -115,15 +112,131 @@ public class ProdDaoImpl implements ProdDao {
 				prod.setDescription(rs.getString("description"));
 				prod.setCname(rs.getString("cname"));
 				list.add(prod);
-				//System.out.println(prod.toString());
 			}
-			//return list;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			JDBCUtils.close(conn, ps, rs);
 		}
 		return list;
+	}
+
+	@Override
+	public boolean updatePnumByPid(int pid, int pnum) {
+		String sql = "update prod set pnum = ? where id = ?";
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			conn = JDBCUtils.getConn();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, pnum);
+			ps.setInt(2, pid);
+			int line = ps.executeUpdate();
+			if(line > 0) {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(conn, ps, null);
+		}
+		return false;
+	}
+
+	@Override
+	public int getCidByPid(Integer pid) {
+		String sql = "select cid from prod where id = ?";		// 悲观锁模式
+		List<Prod> list = new ArrayList<Prod>();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = TransactionManager.getConn();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, pid);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("cid");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(null, ps, rs);
+		}
+		return 0;
+	}
+
+	@Override
+	public List<Prod> listProdByCid(int cid) {
+		String sql = "select * from prod where cid = ? for update";
+		List<Prod> list = new ArrayList<Prod>();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = TransactionManager.getConn();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, cid);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				Prod prod = new Prod();
+				prod.setId(rs.getInt("id"));
+				prod.setName(rs.getString("pname"));
+				prod.setPrice(rs.getDouble("price"));
+				prod.setCid(rs.getInt("cid"));
+				prod.setPnum(rs.getInt("pnum"));
+				prod.setImgurl(rs.getString("imgurl"));
+				prod.setDescription(rs.getString("description"));
+				list.add(prod);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(null, ps, rs);
+		}
+		return list;
+	}
+
+	@Override
+	public boolean deleteProdCategroyByCid(int cid) {
+		String sql="delete from prod_category where id = ?";
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			conn = TransactionManager.getConn();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, cid);
+			int line = ps.executeUpdate();
+			if(line > 0) {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtils.close(null, ps, null);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteProdByPid(Integer pid) {
+		String sql="delete from prod where id = ?";
+		Connection conn = null;
+		PreparedStatement ps = null;
+		try {
+			conn = TransactionManager.getConn();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, pid);
+			int line = ps.executeUpdate();
+			if(line > 0) {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			
+		}
+		return false;
 	}
 
 }

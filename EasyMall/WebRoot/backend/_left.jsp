@@ -46,7 +46,7 @@
 		<div id="menu_bar">
 		
 			<div><a href="<%=basePath%>/backend/manageAddProd.jsp" target="rightFrame">> 商品添加</a></div>
-			<div><a href="<%=basePath%>/backend/manageProdList.jsp" target="rightFrame">> 商品修改</a></div>
+			<div><a href="<%=basePath%>/servlet/ManageProdListServlet" target="rightFrame">> 商品修改</a></div>
 			<div><a href="#" >> 权限管理</a></div>
 			<div><a href="#" >> 订单管理</a></div>
 			<div><a href="#" >> 销售榜单</a></div>

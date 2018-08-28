@@ -18,4 +18,19 @@ public interface ProdService {
 	 * @return 商品列表
 	 */
 	List<Prod> listProd();
+	
+	/**
+	 * 更新商品数量
+	 * @param pid
+	 * @param pnum
+	 * @return true(更新成功) || false(更新失败)
+	 */
+	boolean updatePnum(int pid, int pnum);
+
+	/**
+	 * 根据id删除商品，如果该种类只有此一个商品，则删除商品种类
+	 * @param pid
+	 * @return true(删除成功) || false(删除失败)
+	 */
+	boolean deleteProd(Integer pid);
 }

@@ -36,8 +36,6 @@ public class AutoLoginFilter implements Filter {
 		HttpServletRequest req =  (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		if(req.getSession() == null || req.getSession().getAttribute("user") == null) {	// 未登录状态
-			//System.out.println(req.getSession().getAttribute("user"));
-			//System.out.println("没有登录");
 			Cookie[] cookies = req.getCookies();
 			Cookie autoLoginCookie = null;
 			if(cookies != null) {
@@ -48,17 +46,13 @@ public class AutoLoginFilter implements Filter {
 				}				
 			}
 			if(autoLoginCookie != null) {			// 存在autoLogin
-				//System.out.println("我要自动登录");
-				//System.out.println(autoLoginCookie.getValue());
 				String username = autoLoginCookie.getValue().split("#")[0];
 				username = URLEncoder.encode(username, req.getServletContext().getInitParameter("encode"));
 				String password = autoLoginCookie.getValue().split("#")[1];
-				//System.out.println(username + " " + password);
 				UserService service = BaseFactory.getFactory().getInstance(UserService.class);
 				try {
 					User user = service.login(username, password);
 					if(user != null) {
-						System.out.println("登录成功");
 						req.getSession().setAttribute("user", user);
 					}
 				} catch (MsgException e) {
@@ -74,5 +68,4 @@ public class AutoLoginFilter implements Filter {
 	public void destroy() {
 		// TODO Auto-generated method stub
 	}
-
 }

@@ -32,10 +32,3 @@ public interface UserDao{
 
 }
 
-
-/* 增 insert/save	insertUser/svaeUser
- * 删 delete			deleteUserById
- * 该 update			updateUserById
- * 查 单个
- * 
- */

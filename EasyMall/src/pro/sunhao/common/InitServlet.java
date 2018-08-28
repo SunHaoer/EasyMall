@@ -25,7 +25,6 @@ public class InitServlet {
 		try {
 			File file = new File("I:\\MyJavaspace\\EasyMall\\WebRoot\\WEB-INF\\web.xml");
 			System.out.println(file.exists());
-			//System.out.println(file.exists());
 			SAXReader reader = new SAXReader();
 			Document doc = reader.read(file);
 			Element rootEle = doc.getRootElement();

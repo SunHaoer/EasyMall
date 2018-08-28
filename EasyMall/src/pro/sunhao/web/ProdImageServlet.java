@@ -19,7 +19,6 @@ public class ProdImageServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String imgurl = request.getParameter("imgurl");		// 获取请求参数imgurl
-		//System.out.println(imgurl);
 		FileInputStream in = new FileInputStream(this.getServletContext().getRealPath(imgurl));
 		ServletOutputStream out = response.getOutputStream();
 		byte[] arr = new byte[100];
