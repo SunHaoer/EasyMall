@@ -78,7 +78,7 @@ public class ProdServiceImpl implements ProdService {
 			if(list.size() == 1) {		// 该商品唯一，删除该种类
 				isDelete = dao.deleteProdCategroyByCid(cid);		
 			} 
-			isDelete = dao.deleteProdByPid(pid);		// 删除商品
+			isDelete = dao.deleteProdByPid(pid) && isDelete;	// 删除商品
 			TransactionManager.commitTransaction();		// 事务提交
 		} catch (Exception e) {
 			e.printStackTrace();
