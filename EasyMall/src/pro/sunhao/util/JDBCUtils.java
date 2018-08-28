@@ -20,6 +20,7 @@ public class JDBCUtils {
 	 * @return 连接成功true 连接失败false
 	 */
 	public static Connection getConn() {
+		//System.out.println("获取连接");
 		Connection conn = null;
 		try {
 			conn = ds.getConnection();		// 通过数据库连接池获取连接对象

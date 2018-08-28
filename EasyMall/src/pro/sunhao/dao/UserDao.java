@@ -16,8 +16,9 @@ public interface UserDao{
 	 * 向数据库中添加用户user信息
 	 * @param user
 	 * @return true(添加成功) || false(添加失败)
+	 * @throws MsgException 
 	 */
-	boolean insertUser(User user);
+	boolean insertUser(User user) throws MsgException;
 	
 	/**
 	 * 
@@ -29,6 +30,12 @@ public interface UserDao{
 	 */
 	User getUserByUsernameAndPassword(String username, String password)  throws MsgException ;
 
-
+	/**
+	 * 创建用户购物车数据库表
+	 * @param user
+	 * @return true(创建成功) || false(创建失败)
+	 * @throws MsgException 
+	 */
+	boolean createCart(User user) throws MsgException;
 }
 

@@ -17,10 +17,11 @@ import pro.sunhao.util.TransactionManager;
  */
 public class ProdServiceImpl implements ProdService {
 	private ProdDao dao = BaseFactory.getFactory().getInstance(ProdDao.class);	
-	private Boolean isAdd = false;
+	//private Boolean isAdd = false;
 	
 	@Override
 	public boolean addProd(Prod prod) {
+		boolean isAdd = false;
 		int cid = -1;
 		try {
 			TransactionManager.startTransaction();
@@ -42,6 +43,7 @@ public class ProdServiceImpl implements ProdService {
 			}
 			prod.setCid(cid);		// 将cid添加到prod对象	
 			isAdd = dao.insertProd(prod);
+			//System.out.println("-----------------------------");
 			TransactionManager.commitTransaction();
 		} catch (Exception e) {		// 数据库遇到异常则回滚事务
 			e.printStackTrace();

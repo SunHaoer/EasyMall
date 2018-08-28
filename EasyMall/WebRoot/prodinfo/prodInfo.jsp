@@ -40,7 +40,9 @@
 		        <a href="#" id="addNum" onclick="">+</a>
 			</div>
 			<div id="right_bottom">
-				<input class="add_cart_but" type="button"/>	
+				<a href="${app }/servlet/CartServlet?prod=${prod }">
+					<input class="add_cart_but" type="button"/>	
+				</a>
 			</div>
 		</div>
 	</div>

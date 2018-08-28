@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import pro.sunhao.domain.User;
 import pro.sunhao.exception.MsgException;
 import pro.sunhao.util.JDBCUtils;
+import pro.sunhao.util.TransactionManager;
 
 /**
  * 为用户提供数据库查询的dao
@@ -39,14 +40,14 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean insertUser(User user) {
+	public boolean insertUser(User user) throws MsgException {
 		boolean flag = false;
 		String sql = "insert into user value(null, ?, ?, ?, ?)";
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			conn = JDBCUtils.getConn();
+			conn = TransactionManager.getConn();
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, user.getUsername());
 			ps.setString(2, user.getPassword());
@@ -54,12 +55,13 @@ public class UserDaoImpl implements UserDao {
 			ps.setString(4, user.getEmail());
 			int line = ps.executeUpdate();		// 影响行数
 			if(line > 0) {
-				flag = true;;
+				flag = true;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new MsgException("注册异常");
 		} finally {
-			JDBCUtils.close(conn, ps, rs);
+			JDBCUtils.close(null, ps, rs);
 		}
 		return flag;
 	}
@@ -89,4 +91,29 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 
+	@Override
+	public boolean createCart(User user) throws MsgException {
+		String sql = "create table " + user.getUsername() + "_cart" + " (id int primary key auto_increment, pid int, pname varchar(100), pnum int)";
+		Connection conn = null;
+		PreparedStatement ps = null;
+		boolean isCreate = false;
+		try {										// 这里可能有问题
+			conn = TransactionManager.getConn();
+			ps = conn.prepareStatement(sql);
+			//ps.setString(1, user.getUsername() + "_cart");
+			//ps.executeUpdate();
+			//boolean isCreate = ps.execute();
+			
+			//System.out.println(ps.executeUpdate());
+			//System.out.println(isCreate);
+			int line = ps.executeUpdate();
+			if(line == 0) isCreate = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new MsgException("注册异常");
+		} finally {
+			JDBCUtils.close(null, ps, null);
+		}
+		return isCreate;
+	}
 }

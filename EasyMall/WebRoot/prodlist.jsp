@@ -34,7 +34,7 @@
 					</a>	
 					<div>
 						<div id="gotocart_div">
-							<a href="#">加入购物车</a>
+							<a href="<%=basePath%>/servlet/CartServlet?prod=${prod}">加入购物车</a>
 						</div>
 						<div id="say_div">133人评价</div>
 					</div>

@@ -7,6 +7,7 @@ import pro.sunhao.exception.MsgException;
 import pro.sunhao.factory.BaseFactory;
 import pro.sunhao.factory.UserDaoFactory;
 import pro.sunhao.factory.UserServiceFactory;
+import pro.sunhao.util.TransactionManager;
 
 /**
  * 为User处理业务逻辑
@@ -26,7 +27,26 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean registerUser(User user) {
-		boolean flag = dao.insertUser(user);
+		boolean flag = false;
+		
+		try {
+			TransactionManager.startTransaction();
+			boolean flag1 = false, flag2 = false;
+			flag1 = dao.insertUser(user);
+			flag2 = dao.createCart(user);	
+			System.out.println(flag1 + " " + flag2);
+			//TransactionManager.commitTransaction();
+			flag = flag1 && flag2;
+			TransactionManager.commitTransaction();
+//			if(flag) {
+//				TransactionManager.commitTransaction();
+//			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			TransactionManager.rollbackTransaction();
+		} finally {
+			TransactionManager.closeConn();
+		}
 		return flag;
 	}
 

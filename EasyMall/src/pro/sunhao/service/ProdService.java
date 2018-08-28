@@ -33,4 +33,5 @@ public interface ProdService {
 	 * @return true(删除成功) || false(删除失败)
 	 */
 	boolean deleteProd(Integer pid);
+	
 }

@@ -31,3 +31,17 @@ create table prod (
 	imgurl varchar(200),		-- 商品图片的url
 	description varchar(200)	-- 商品描述
 );
+
+-- 创建购物车表 --
+create table (user.name + _car) (
+	id int primary key auto_increment,
+	pid int,
+	pname varchar(100)
+); 
+
+
+create table (user.name + _car) (id int primary key auto_increment, pid int, pname varchar(100)); 
+
+
+
+

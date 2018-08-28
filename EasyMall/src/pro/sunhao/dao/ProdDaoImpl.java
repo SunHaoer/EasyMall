@@ -234,9 +234,8 @@ public class ProdDaoImpl implements ProdDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			
+			JDBCUtils.close(null, ps, null);
 		}
 		return false;
 	}
-
 }

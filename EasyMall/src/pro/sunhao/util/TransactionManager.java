@@ -28,6 +28,7 @@ public class TransactionManager {		// 单例
 		Connection conn = JDBCUtils.getConn();
 		try {				// 开启连接，并将其放入当前线程的map
 			conn.setAutoCommit(false);
+			System.out.println(conn.getAutoCommit());
 			t.set(conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -39,6 +40,7 @@ public class TransactionManager {		// 单例
 	 */
 	public static void commitTransaction() {
 		try {
+			System.out.println("提交");
 			t.get().commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
