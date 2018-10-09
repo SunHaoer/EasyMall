@@ -1,5 +1,8 @@
 # EasyMall
 卖东西啦， 走过路过不要错过
+项目展示：http://www.wochi.xin/easymall
+项目后台页面：http://www.wochi.xin/easymall/backend/manage.jsp(需用户名admin，密码admim登录)
+项目部署环境：jdk1.7 + tomcat7.0
 
 这是一个使用基础的web+jsp搭建的电商网站，实现了注册登录功能，并利用filter实现用户自动登录，利用cookie技术实现“记住用户名功能”；
 实现；
