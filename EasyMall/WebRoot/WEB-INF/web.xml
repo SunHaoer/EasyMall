@@ -1,51 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.0" 
-	xmlns="http://java.sun.com/xml/ns/javaee" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
-	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
   <display-name></display-name>
-  
-  <!-- 配置当前web应用的初始化参数 -->
   <context-param>
-  	<param-name>encode</param-name>
-  	<param-value>utf-8</param-value>
+    <param-name>encode</param-name>
+    <param-value>utf-8</param-value>
   </context-param>
-  
-  <!-- 配置监听器 -->
   <listener>
-  	<listener-class>pro.sunhao.listener.EasyMallServletContextListener</listener-class>
+    <listener-class>pro.sunhao.listener.EasyMallServletContextListener</listener-class>
   </listener>
-  
-  <!-- 配置filter -->
   <filter>
-  	<filter-name>EncodingFilter</filter-name>
-  	<filter-class>pro.sunhao.filter.EncodingFilter</filter-class>
+    <filter-name>EncodingFilter</filter-name>
+    <filter-class>pro.sunhao.filter.EncodingFilter</filter-class>
   </filter>
   <filter-mapping>
-  	<filter-name>EncodingFilter</filter-name>
-  	<url-pattern>/*</url-pattern>
+    <filter-name>EncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
-   <filter>
-  	<filter-name>AutoLoginFilter</filter-name>
-  	<filter-class>pro.sunhao.filter.AutoLoginFilter</filter-class>
+  <filter>
+    <filter-name>AutoLoginFilter</filter-name>
+    <filter-class>pro.sunhao.filter.AutoLoginFilter</filter-class>
   </filter>
   <filter-mapping>
-  	<filter-name>AutoLoginFilter</filter-name>
-  	<url-pattern>/*</url-pattern>
+    <filter-name>AutoLoginFilter</filter-name>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
-   <filter>
-  	<filter-name>BackendFilter</filter-name>
-  	<filter-class>pro.sunhao.filter.BackendFilter</filter-class>
+  <filter>
+    <filter-name>BackendFilter</filter-name>
+    <filter-class>pro.sunhao.filter.BackendFilter</filter-class>
   </filter>
   <filter-mapping>
-  	<filter-name>BackendFilter</filter-name>
-  	<url-pattern>/backend/*</url-pattern>
+    <filter-name>BackendFilter</filter-name>
+    <url-pattern>/backend/*</url-pattern>
   </filter-mapping>
-  
-  <!-- 配置servlet -->
   <servlet>
     <servlet-name>RegistServlet</servlet-name>
     <servlet-class>pro.sunhao.web.RegistServlet</servlet-class>
@@ -106,10 +92,6 @@
     <servlet-name>UserCartServlet</servlet-name>
     <servlet-class>pro.sunhao.web.UserCartServlet</servlet-class>
   </servlet>
-
-
-
-
   <servlet-mapping>
     <servlet-name>RegistServlet</servlet-name>
     <url-pattern>/servlet/RegistServlet</url-pattern>

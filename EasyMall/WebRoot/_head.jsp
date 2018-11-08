@@ -50,14 +50,14 @@
 			<ul>
 				<li><a href="${app}/index.jsp">首页</a></li>
 				<li><a href="${app}/servlet/ProdListServlet">全部商品</a></li>
-				<li><a href="#">手机数码</a></li>
-				<li><a href="#">电脑平板</a></li>
-				<li><a href="#">家用电器</a></li>
-				<li><a href="#">汽车用品</a></li>
-				<li><a href="#">食品饮料</a></li>
-				<li><a href="#">图书杂志</a></li>
-				<li><a href="#">服装服饰</a></li>
-				<li><a href="#">理财产品</a></li>
+				<li><a href="${app}/servlet/ProdListServlet">全部商品</a></li>
+				<li><a href="${app}/servlet/ProdListServlet">全部商品</a></li>
+				<li><a href="${app}/servlet/ProdListServlet">全部商品</a></li>
+				<li><a href="${app}/servlet/ProdListServlet">全部商品</a></li>
+				<li><a href="${app}/backend/manage.jsp">后台管理</a></li>
+				<li><a href="${app}/backend/manage.jsp">后台管理</a></li>
+				<li><a href="${app}/backend/manage.jsp">后台管理</a></li>
+				<li><a href="${app}/backend/manage.jsp">后台管理</a></li>
 			</ul>
 		</div>
 	</div>

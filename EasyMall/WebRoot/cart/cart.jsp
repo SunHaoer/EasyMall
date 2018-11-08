@@ -30,7 +30,7 @@
 					<input id="buyNumInp" type="text" value="1" >
 					<a href="javascript:void(0)" id="addNum" >+</a>
 				</span>
-				<span id="prods_money">1999</span>
+				<span id="prods_money">1024</span>
 				<span id="prods_del"><a href="#">删除</a></span>
 			
 			</div>
@@ -42,7 +42,7 @@
 					<span>全选</span>
 					<a id="del_a" href="#">删除选中的商品</a>
 					<span id="span_1">总价：</span>
-					<span id="span_2">￥1999</span>
+					<span id="span_2">￥1024</span>
 				</div>
 				<div id="total_2">	
 					<a id="goto_order" href="#">去结算</a>
